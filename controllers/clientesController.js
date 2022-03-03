@@ -2,9 +2,8 @@ import pool from "../database/keys";
 const clientes = {};
 
 clientes.todos = async (req, res) => {
-  //const { id_usr } = req.body;
-  //  console.log(req.body);
-
+  const { id_usr } = req.body;
+   console.log(req.body);
   try {
     const clientes = await (
       await pool.query(
