@@ -8,7 +8,7 @@ import path from 'path';
 
 const app = express();
 
-app.set('port', process.env.PORT || 4002);
+app.set('port', process.env.PORT || 4003);
 //middlewares
 app.use(morgan('tiny'));
 app.use(cors());//permite acceder a nuestro servidior desd eotros dominios
@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use('/',require("./router/auth.router"));
 app.use("/clientes", require("./router/clientes.router"));
 app.use("/vehiculos", require("./router/vehiculos.router"));
+app.use("/metodos", require("./router/metodos.router"));
 
 
 app.listen(app.get('port'),()=>{
