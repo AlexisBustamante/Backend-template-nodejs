@@ -7,18 +7,25 @@ import history from 'connect-history-api-fallback';
 import path from 'path';
 import configurations from '../config/config';
 
+
+//Routes Imports
+import authRouter from '../routes/auth.routes';
+import methodsRouter from '../routes/methods.routes';
+
 //Paths
 const paths = {
-    index: '/',
-    auth: 'api/auth',
-    methods: 'api/methods',
+    auth: '/api/auth',
+    methods: '/api/methods',
 };
 
 
+//Initializations
 const app = express();
 
+//Settings
 app.set('port', configurations.SERVER_PORT || 3000);
-//middlewares
+
+//Middlewares
 app.use(morgan('tiny'));
 app.use(cors()); //permite acceder a nuestro servidior desd eotros dominios
 app.use(express.urlencoded({ extended: true })); //para recibir rutas y url
@@ -28,10 +35,7 @@ app.use(history());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
-app.use('/', require("./router/auth.router"));
-app.use("/metodos", require("./router/metodos.router"));
+app.use(paths.auth, authRouter);
+app.use(paths.methods, methodsRouter);
 
-
-// app.listen(app.get('port'), () => {
-//     console.log('server on port ' + app.get('port'));
-// });
+module.exports = app;
