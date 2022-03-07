@@ -5,10 +5,8 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "dev": "nodemon app.js",
-        "babel": "nodemon app.js --exec babel-node"
+        "start": "nodemon --exec babel-node app.js"
     },
-
     "keywords": [],
     "author": "",
     "license": "ISC",
@@ -16,20 +14,25 @@
         "bcryptjs": "^2.4.3",
         "connect-history-api-fallback": "^1.6.0",
         "cors": "^2.8.5",
+        "dotenv": "^16.0.0",
         "express": "^4.17.1",
         "express-fileupload": "^1.2.1",
+        "express-validator": "^6.14.0",
         "jsonwebtoken": "^8.5.1",
         "morgan": "^1.10.0",
-        "pg": "^8.5.1"
+        "pg": "^8.5.1",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.17.0"
     },
     "devDependencies": {
-        "@babel/cli": "^7.13.14",
-        "@babel/core": "^7.13.15",
-        "@babel/node": "^7.13.13",
-        "@babel/preset-env": "^7.13.15",
+        "@babel/cli": "^7.17.6",
+        "@babel/core": "^7.17.5",
+        "@babel/node": "^7.16.8",
+        "@babel/preset-env": "^7.16.11",
         "nodemon": "^2.0.7"
     }
 }
+<<<<<<< HEAD
 =======
   "name": "backend-app",
   "version": "1.0.0",
@@ -61,3 +64,5 @@
   }
 }
 >>>>>>> 0f7cfac50a7153519bd2c25fdcb060be580324bb
+=======
+>>>>>>> dev-d
