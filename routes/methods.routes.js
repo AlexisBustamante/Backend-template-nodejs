@@ -1,12 +1,14 @@
 import { Router } from 'express';
-import metodosController from '../controllers/methods/methods.controllers';
+import { getMethods } from '../controllers/methods.controllers';
 
 const router = Router();
-router.post("/todos", metodosController.todos);
-router.post("/nuevo", metodosController.NuevoMetodo);
-router.delete("/eliminar/:id", metodosController.EliminarMetodo);
-router.put("/editar", metodosController.EditarMetodo);
+
+router.get('/', getMethods);
+// router.post("/", metodosController.todos);
+// router.post("/nuevo", metodosController.NuevoMetodo);
+// router.delete("/eliminar/:id", metodosController.EliminarMetodo);
+// router.put("/editar", metodosController.EditarMetodo);
 
 
 
-module.exports = router;
+export default router;

@@ -1,43 +1,13 @@
-import pool from "../../database/keys";
+import pool from "../database/config";
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const authentication = {};
 
-authentication.servicio = async(req, res) => {
-
-    const body = req.body;
-
-    const entrevistas = [{
-        name: "entrevitsa1",
-        desc: 'es un ejemplo'
-    }, {
-        name: "entrevitsa2",
-        desc: 'es un ejemplo 2'
-    }];
-
-    try {
-        res.json({
-            entrevistas
-        });
-
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: 'Ocurrio un error',
-            error
-        })
-    }
-
-
-}
 
 authentication.register = async(req, res) => {
         const { email, password, name, id_rol } = req.body;
         let passHash = await bcryptjs.hash(password, 8);
-
-
 
         try {
 
