@@ -14,6 +14,23 @@ const getUsers = async(req, res) => {
     }
 };
 
+const getUser = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findOne({
+            where: { id }
+        });
+        res.status(200).json({
+            user
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al obtener el usuario',
+            error
+        })
+    }
+}
+
 const createUser = async(req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -26,10 +43,12 @@ const createUser = async(req, res) => {
                 message: 'El usuario ya existe',
             })
         }
+        const salt = bcrypt.genSaltSync();
+        const hash = bcrypt.hashSync(password, salt);
         const newUser = await User.create({
             name,
             email,
-            password
+            hash
         });
         res.status(200).json({
             message: 'Usuario creado correctamente',
@@ -43,10 +62,43 @@ const createUser = async(req, res) => {
     }
 }
 
+const updateUser = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, email, password } = req.body;
+        if (password) {
+            const salt = bcrypt.genSaltSync();
+            const hash = bcrypt.hashSync(password, salt);
+        }
+        const userUpdated = await User.update({
+            name,
+            email,
+            password
+        }, {
+            where: { id }
+        });
+
+        res.status(200).json({
+            message: 'Usuario actualizado correctamente',
+            userUpdated
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al actualizar el usuario',
+            error
+        })
+    }
+}
+
+const deleteUser = async(req, res) => {}
 
 
 
 export {
+    getUser,
     getUsers,
-    createUser
+    createUser,
+    updateUser,
+    deleteUser
 }

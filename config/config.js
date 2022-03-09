@@ -8,6 +8,7 @@ const configurations = {
     DB_NAME: process.env.DB_NAME,
     DB_URL: process.env.DB_URL,
     SERVER_PORT: process.env.SERVER_PORT,
+    JWT_SECRET_KEY: process.env.SECRET_KEY,
 }
 
 
