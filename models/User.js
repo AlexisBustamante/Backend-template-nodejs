@@ -26,6 +26,13 @@ const User = sequelize.define('user', {
     },
 }, {
     timestamps: false
+}, {
+    defaultScope: {
+        attributes: {
+            exclude: ['password']
+        }
+    }
 });
+
 
 export default User;

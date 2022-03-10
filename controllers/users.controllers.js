@@ -1,4 +1,5 @@
 import { User } from '../models/index';
+import { generateHash } from '../helpers/index';
 
 const getUsers = async(req, res) => {
     try {
@@ -34,20 +35,13 @@ const getUser = async(req, res) => {
 const createUser = async(req, res) => {
     try {
         const { name, email, password } = req.body;
-        const user = await User.findOne({
-            where: { email }
-        });
-        if (user) {
-            return res.status(400).json({
-                message: 'El usuario ya existe',
-            })
-        }
-        const salt = bcrypt.genSaltSync();
-        const hash = bcrypt.hashSync(password, salt);
+        const hash = generateHash(password);
         const newUser = await User.create({
             name,
             email,
-            hash
+            password: hash
+        }, {
+            returning: ['id', 'name', 'email', 'state', 'id_role']
         });
         res.status(200).json({
             message: 'Usuario creado correctamente',
@@ -64,25 +58,22 @@ const createUser = async(req, res) => {
 const updateUser = async(req, res) => {
     try {
         const { id } = req.params;
-        const { name, email, password } = req.body;
+        const { password, ...fieldsUpdate } = req.body;
         if (password) {
-            const salt = bcrypt.genSaltSync();
-            const hash = bcrypt.hashSync(password, salt);
+            fieldsUpdate.password = generateHash(password);
         }
-        const userUpdated = await User.update({
-            name,
-            email,
-            password
-        }, {
-            where: { id }
+        const userUpdated = await User.update(fieldsUpdate, {
+            where: { id },
+            returning: ['id', 'name', 'email', 'state', 'id_role'],
         });
-
+        const userUpdatedData = userUpdated[1][0].dataValues;
         res.status(200).json({
             message: 'Usuario actualizado correctamente',
-            userUpdated
+            userUpdatedData
         })
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: 'Error al actualizar el usuario',
             error
