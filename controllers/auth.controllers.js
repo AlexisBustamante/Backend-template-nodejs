@@ -1,17 +1,13 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User, Role } from '../models/index';
+import { configuration } from '../config/config';
 
 
 const authentication = {};
-
     authentication.login = async(req, res) => {
         const { email, password } = req.body;
-        //console.log(email);
-        //console.log(password);
-
         try {
-            //const users = await (await pool.query('select * from users where email=$1', [email])).rows[0];
             const user = await User.findOne({
                 where: { email },
                 include: [{
@@ -20,9 +16,6 @@ const authentication = {};
                     
                 }]
             });
-
-            //console.log(user);
-
 
             let hashSaved = user.password;
             let compare = bcryptjs.compareSync(password, hashSaved);
@@ -36,15 +29,12 @@ const authentication = {};
                         name: user.name
                         }
                     }, 'secret', { expiresIn: 60 * 60 * 24 * 30 }) //expira en 30 dias
-
         
                 res.status(200).json({
                     message: 'Loageado',
                     user,
                     token
                 })
-
-
 
             } else {
                 res.status(400).json({
