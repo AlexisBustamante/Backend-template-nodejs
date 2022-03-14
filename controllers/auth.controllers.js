@@ -1,72 +1,40 @@
-import pool from "../database/config";
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { User, Role } from '../models/index';
+import { configuration } from '../config/config';
+
 
 const authentication = {};
-
-
-authentication.register = async(req, res) => {
-        const { email, password, name, id_rol } = req.body;
-        let passHash = await bcryptjs.hash(password, 8);
-
+    authentication.login = async(req, res) => {
+        const { email, password } = req.body;
         try {
-
-            await pool.query(`INSERT INTO users(
-	 name, email, password, id_rol)
-	VALUES ($1, $2, $3, $4) `, [name, email, passHash, id_rol]);
-
-
-            res.status(200).json({
-                message: 'Usuario Creado'
+            const user = await User.findOne({
+                where: { email },
+                include: [{
+                    model: Role,
+                    required: true,
+                    
+                }]
             });
 
-        } catch (error) {
-
-            console.log(error);
-            var message = 'ocurrio un error';
-
-            if (error.constraint = "users_email_key") {
-                message = `El correo (${email}) ya está registrado`;
-            }
-            res.status(500).json({
-                message,
-                error
-            })
-        }
-
-
-    },
-
-    authentication.login = async(req, res) => {
-
-        const { email, password } = req.body;
-
-        try {
-
-            const users = await (await pool.query('select * from users where email=$1', [email])).rows[0];
-
-            let hashSaved = users.password;
+            let hashSaved = user.password;
             let compare = bcryptjs.compareSync(password, hashSaved);
 
             if (compare) {
                 //creo un TOKEN de sesión
                 let token = jwt.sign({
                         data: {
-                            id: users.id,
-                            email: users.email,
-                            name: users.name
+                        id: user.id,
+                        email: user.email,
+                        name: user.name
                         }
                     }, 'secret', { expiresIn: 60 * 60 * 24 * 30 }) //expira en 30 dias
-
+        
                 res.status(200).json({
                     message: 'Loageado',
-                    id: users.id,
-                    email: users.email,
-                    name: users.name,
+                    user,
                     token
                 })
-
-
 
             } else {
                 res.status(400).json({
@@ -75,51 +43,13 @@ authentication.register = async(req, res) => {
             }
 
         } catch (error) {
-            res.status(500).json({
+            res.status(400).json({
                 error,
                 message: 'Ocurrio un error',
             })
         }
 
-
-
     },
 
-
-    authentication.signIn = async(req, res) => {
-        const { email, password } = req.body;
-
-        //console.log(req.body);
-
-        try {
-            const usuario = await (
-                await pool.query(
-                    `SELECT usuarios.id_usr, usuarios.usr_name, usuarios.usr_email, roles_usr.name_rol from usuarios
-        JOIN roles_usr ON usuarios.usr_id_rol=roles_usr.id_rol
-        where usuarios.usr_email=$1 AND usuarios.usr_password=$2`, [email, password]
-                )
-            ).rows;
-
-            if (usuario.length > 0) {
-                res.status(200).json({
-                    id_usr: usuario[0].id_usr,
-                    usr_name: usuario[0].usr_name,
-                    usr_email: usuario[0].usr_email,
-                    usr_rol: usuario[0].name_rol
-                })
-            } else {
-                res.status(400).json({
-                    message: "Usuario no Existe o la contraseña es incorrecta",
-                    NotFound: true,
-                });
-            }
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({
-                message: "ocurrio un error",
-                error,
-            });
-        }
-    };
 
 module.exports = authentication;
