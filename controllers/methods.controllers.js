@@ -45,53 +45,6 @@ const createMethod = async(req, res) => {
     }
 }
 
-// metodos.EliminarMetodo = async(req, res) => {
-//     const id = req.params.id;
-
-
-//     console.log(id);
-//     try {
-
-//         const record = await (await pool.query(`
-//         DELETE FROM metodos WHERE id=$1 returning *
-//         `, [id])).rows[0];
-
-//         res.status(200).json({
-//             message: 'Registro Eliminado.',
-//             record
-//         })
-
-//     } catch (error) {
-//         res.status(500).json({
-//             message: 'No fue posible eliminar Registro'
-//         })
-//     }
-// }
-
-// metodos.EditarMetodo = async(req, res) => {
-//     const { id, name, description, contenthtml, datecreate } = req.body;
-//     const dateupdate = new Date();
-//     console.log(req.body, dateupdate);
-//     try {
-//         const record = (await pool.query(`
-//         UPDATE metodos
-//         SET 
-//         name=$1, description=$2, contenthtml=$3, dateupdate=$4,datecreate=$6
-//         WHERE id=$5
-//         returning *`, [name, description, contenthtml, dateupdate, id, datecreate])).rows[0];
-
-//         res.status(200).json({
-//             message: 'Método actualizado.',
-//             record
-//         })
-//     } catch (error) {
-//         res.status(500).json({
-//             message: 'Ocurrio un error al actualizar',
-//             error
-//         })
-//     }
-
-// }
 
 export {
     getMethods,
