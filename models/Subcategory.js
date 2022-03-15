@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import sequelize from '../database/config';
 
-const Method = sequelize.define('method', {
+const Subcategory = sequelize.define('subcategory', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -10,19 +10,7 @@ const Method = sequelize.define('method', {
     name: {
         type: Sequelize.STRING
     },
-    description: {
-        type: Sequelize.STRING
-    },
-    contenthtml: {
-        type: Sequelize.STRING
-    },
-    datecreate: {
-        type: Sequelize.DATE
-    },
-    dateupdate: {
-        type: Sequelize.DATE
-    },
-    id_user: {
+    id_category: {
         type: Sequelize.INTEGER
     },
 }, {
@@ -30,4 +18,4 @@ const Method = sequelize.define('method', {
 });
 
 
-export default Method;
+export default Subcategory;

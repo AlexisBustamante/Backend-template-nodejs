@@ -1,22 +1,18 @@
 import { Sequelize } from 'sequelize';
 import sequelize from '../database/config';
 
-const Usage = sequelize.define('usage', {
+const Category = sequelize.define('category', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    id_module: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    id_document: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+    name: {
+        type: Sequelize.STRING
     },
 }, {
     timestamps: false
 });
 
-export default Usage;
+
+export default Category;

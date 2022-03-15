@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import sequelize from '../database/config';
 
-const User = sequelize.define('user', {
+const Document = sequelize.define('document', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -10,29 +10,31 @@ const User = sequelize.define('user', {
     name: {
         type: Sequelize.STRING
     },
-    email: {
+    description: {
         type: Sequelize.STRING
     },
-    password: {
+    contenthtml: {
         type: Sequelize.STRING
+    },
+    datecreate: {
+        type: Sequelize.DATE
+    },
+    dateupdate: {
+        type: Sequelize.DATE
     },
     state: {
         type: Sequelize.BOOLEAN,
         defaultValue: true
     },
-    id_role: {
-        type: Sequelize.INTEGER,
-        defaultValue: 1
+    id_user: {
+        type: Sequelize.INTEGER
+    },
+    id_subcategory: {
+        type: Sequelize.INTEGER
     },
 }, {
     timestamps: false
-}, {
-    defaultScope: {
-        attributes: {
-            exclude: ['password']
-        }
-    }
 });
 
 
-export default User;
+export default Document;
