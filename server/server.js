@@ -11,13 +11,19 @@ import configurations from '../config/config';
 
 //Routes Imports
 import authRouter from '../routes/auth.routes';
-import methodsRouter from '../routes/methods.routes';
+import categoriesRouter from '../routes/categories.routes';
+import documentsRouter from '../routes/documents.routes';
+import rolesRouter from '../routes/roles.routes';
+import subcategoriesRouter from '../routes/subcategories.routes';
 import usersRouter from '../routes/users.routes';
 
 //Paths
 const paths = {
     auth: '/api/auth',
-    methods: '/api/methods',
+    categories: '/api/categories',
+    documents: '/api/documents',
+    roles: '/api/roles',
+    subcategories: '/api/subcategories',
     users: '/api/users',
 };
 
@@ -38,7 +44,10 @@ app.use(fileupload({ useTempFiles: true })); //para los Archivos
 
 //Routes
 app.use(paths.auth, authRouter);
-app.use(paths.methods, methodsRouter);
+app.use(paths.categories, categoriesRouter);
+app.use(paths.documents, documentsRouter);
+app.use(paths.roles, rolesRouter);
+app.use(paths.subcategories, subcategoriesRouter);
 app.use(paths.users, usersRouter);
 
 

@@ -5,7 +5,10 @@ const getUsers = async(req, res) => {
     try {
         const users = await User.findAll();
         res.status(200).json({
-            users
+            users,
+            where: {
+                state: true
+            }
         })
     } catch (error) {
         res.status(500).json({
@@ -81,7 +84,24 @@ const updateUser = async(req, res) => {
     }
 }
 
-const deleteUser = async(req, res) => {}
+const deleteUser = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const userDeleted = await User.update({
+            state: false,
+            where: { id }
+        });
+        res.status(200).json({
+            message: 'Usuario eliminado correctamente',
+            userDeleted
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al eliminar el usuario',
+            error
+        })
+    }
+}
 
 
 

@@ -1,19 +1,30 @@
 import User from './User';
 import Role from './Role';
-import Method from './Method';
+import Document from './Documents';
 import Module from './Module';
 import Usage from './Usage';
+import Subcategory from './Subcategory';
+import Category from './Category';
 
 User.belongsTo(Role, { foreignKey: 'id_role' });
 Role.hasMany(User, { foreignKey: 'id_role' });
 
-Usage.belongsTo(Method, { foreignKey: 'id_method' });
-Method.hasMany(Usage, { foreignKey: 'id_method' });
+Usage.belongsTo(Document, { foreignKey: 'id_document' });
+Document.hasMany(Usage, { foreignKey: 'id_document' });
 
 Usage.belongsTo(Module, { foreignKey: 'id_module' });
 Module.hasMany(Usage, { foreignKey: 'id_module' });
 
-Method.belongsTo(User, { foreignKey: 'id_user' });
-User.hasMany(Method, { foreignKey: 'id_user' });
+Document.belongsTo(User, { foreignKey: 'id_user' });
+User.hasMany(Document, { foreignKey: 'id_user' });
 
-export { User, Role, Method, Module, Usage };
+Document.belongsTo(Subcategory, { foreignKey: 'id_subcategory' });
+Subcategory.hasMany(Document, { foreignKey: 'id_subcategory' });
+
+Subcategory.belongsTo(Category, { foreignKey: 'id_category' });
+Category.hasMany(Subcategory, { foreignKey: 'id_category' });
+
+
+
+
+export { User, Role, Document, Module, Usage, Subcategory, Category };
