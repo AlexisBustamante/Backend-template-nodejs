@@ -10,6 +10,9 @@ const Category = sequelize.define('category', {
     name: {
         type: Sequelize.STRING
     },
+    state: {
+        type: Sequelize.BOOLEAN
+    }
 }, {
     timestamps: false
 });

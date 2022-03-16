@@ -13,6 +13,9 @@ const Role = sequelize.define('role', {
     role: {
         type: Sequelize.STRING
     },
+    state: {
+        type: Sequelize.BOOLEAN
+    }
 }, {
     timestamps: false
 });

@@ -10,6 +10,9 @@ const Subcategory = sequelize.define('subcategory', {
     name: {
         type: Sequelize.STRING
     },
+    state: {
+        type: Sequelize.BOOLEAN
+    },
     id_category: {
         type: Sequelize.INTEGER
     },
