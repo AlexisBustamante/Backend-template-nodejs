@@ -2,7 +2,9 @@ import { Document, User } from "../models/index";
 
 const getDocuments = async(req, res) => {
     try {
-        const documents = await Document.findAll();
+        const documents = await Document.findAll({
+            where: { state:true }
+        });
         res.status(200).json({
             total: documents.length,
             documents
