@@ -15,7 +15,6 @@ const getSubcategories = async(req, res) => {
     }
 };
 
-
 const getSubcategory = async(req, res) => {
     try {
         const { id } = req.params;
@@ -93,6 +92,7 @@ const deleteSubcategory = async(req, res) => {
         });
     }
 };
+
 
 
 export {

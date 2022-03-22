@@ -112,10 +112,29 @@ const deleteDocument = async(req, res) => {
     }
 }
 
+const getDocumentsById = async(req, res) => {
+    try {
+        const { id_subcategory } = req.params;
+        const document = await Document.findAll({
+            where: { id_subcategory }
+        });
+
+        res.status(200).json({
+            document
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al obtener el documento',
+            error
+        })
+    }
+}
+
 
 export {
     getDocuments,
     getDocument,
+    getDocumentsById,
     createDocument,
     updateDocument,
     deleteDocument
