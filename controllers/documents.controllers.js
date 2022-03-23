@@ -116,7 +116,10 @@ const getDocumentsById = async(req, res) => {
     try {
         const { id_subcategory } = req.params;
         const document = await Document.findAll({
-            where: { id_subcategory }
+            where: {
+                id_subcategory,
+                state:true
+            }
         });
 
         res.status(200).json({
